@@ -1,13 +1,15 @@
 {
   "expo": {
-    "name": "melo",
+    "name": "Melo",
     "slug": "melo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dathu.melo",
+      "appleTeamId": "D55Z5HS72V"
     },
     "android": {
       "adaptiveIcon": {
@@ -16,10 +18,28 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.dathu.melo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-image",
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": true,
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      "expo-font",
+      "expo-asset",
+      "expo-secure-store"
+    ],
+    "scheme": "melo",
+    "backgroundColor": "#0A0A0F"
   }
 }
