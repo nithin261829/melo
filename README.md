@@ -110,24 +110,7 @@ Every feature was a way to study one of these topics. The [engineering highlight
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph Phone["iPhone (everything runs on-device)"]
-        UI["Screens<br/>Expo Router"] --> Player["player.ts<br/>queue · radio · resume"]
-        UI --> YT["yt.ts<br/>InnerTube data layer"]
-        UI --> Lib["library.ts<br/>likes · downloads"]
-        Player --> Audio["expo-audio"]
-        Audio --> NP["iOS Now Playing<br/>lock screen · Dynamic Island"]
-        RC["RemoteCommands<br/>(Swift module)"] --> NP
-        Acc["account.ts"] --> KC["Keychain"]
-        Acc --> WC["WebCookies<br/>(Swift module)"]
-    end
-    YT -- "HTTPS" --> IT["YouTube InnerTube API"]
-    Audio -- "HLS audio" --> CDN["YouTube media CDN"]
-    UI -- "moment labels + taste" --> MA["Melodi AI<br/>FastAPI + Claude"]
-    MA -- "curated mood playlists" --> YTM["YouTube Music<br/>Moods & genres"]
-    MA -- "structured outputs" --> CL["Claude API"]
-```
+<p align="center"><img src="docs/architecture.svg" alt="Architecture: the Melo iPhone app, the Melodi AI server and the cloud services they use" width="100%" /></p>
 
 **How a song plays**
 1. `yt.ts` asks InnerTube for the track's streaming data, using the client profile YouTube serves to visionOS.
