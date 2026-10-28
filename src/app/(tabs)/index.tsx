@@ -9,6 +9,7 @@ import { playTrack, playTracks } from '../../lib/player';
 import { useStore } from '../../lib/store';
 import { getHome, type Shelf } from '../../lib/yt';
 import { Artwork, CollectionCard, ErrorView, HScroll, Loading, SectionTitle, TrackCard, TrackRow } from '../../ui/components';
+import { MelodiCard } from '../../ui/MelodiCard';
 import { colors } from '../../ui/theme';
 
 function AccountButton() {
@@ -96,6 +97,8 @@ export default function Home() {
         <Text style={{ color: colors.text, fontSize: 32, fontWeight: '900', letterSpacing: -0.8 }}>{greeting()}</Text>
         <AccountButton />
       </View>
+
+      <MelodiCard />
 
       {recent.length > 0 && (
         <>

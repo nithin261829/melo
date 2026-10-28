@@ -37,7 +37,13 @@
       ],
       "expo-font",
       "expo-asset",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Melo uses your location while the app is open to tailor Melodi AI mixes to your weather and surroundings. Melodi AI only receives your city name; a location rounded to about 1 km is used to look up the weather."
+        }
+      ]
     ],
     "scheme": "melo",
     "backgroundColor": "#0A0A0F"

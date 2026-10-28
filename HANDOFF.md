@@ -81,3 +81,10 @@ A personal, ad-free YouTube Music app for iPhone, inspired by ViMusic and Demus.
 ## Not possible on iOS
 - Setting Melo as the default music app.
 - Resuming from AirPods after the app was swiped away.
+
+## Melodi AI (added 2026-10-28)
+- An AI DJ: Home card `src/ui/MelodiCard.tsx` → `src/lib/context.ts` (time, weather, activity, city labels) → `src/lib/melodi.ts` → the Python server in `melodi-ai/` (FastAPI + Claude + ytmusicapi). The design is in `melodi-ai/README.md`.
+- Pipeline: Claude reads the context → code narrows ~3,400 curated YouTube Music mood playlists → Claude picks 3–6 → code collects and scores real tracks → Claude orders the mix. Claude only returns numbers that code validates.
+- Setup: `melodi-ai/.env` needs `ANTHROPIC_API_KEY`. The app reads `EXPO_PUBLIC_MELODI_URL` (and optionally `EXPO_PUBLIC_MELODI_TOKEN`) from the root `.env` at build time. `expo-location` is a native module, so the app needs a rebuild.
+- The user wanted LangChain at first. We chose plain Anthropic SDK structured outputs as simpler and more reliable. A separately-defined-tools agent is on the roadmap.
+- Ideas not built yet: evals in CI, Supabase pgvector taste embeddings, "🎬 Shot here" (Wikidata filming locations → soundtracks), audio mood features (Essentia, CLAP), saved places.

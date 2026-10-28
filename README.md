@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>An ad-free YouTube Music player for iPhone, built with React Native and Expo.</b><br/>
-  Streams, searches and downloads music straight from YouTube Music, entirely on the device: no backend, no API key, no cost.
+  Streams, searches and downloads music straight from YouTube Music, entirely on the device, plus <b>Melodi AI</b>, a context-aware AI DJ built on Claude.
 </p>
 
 <p align="center">
@@ -15,6 +15,8 @@
   <img alt="React Native" src="https://img.shields.io/badge/React%20Native-0.88-61DAFB" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-3178C6" />
   <img alt="Swift" src="https://img.shields.io/badge/native-Swift-F05138" />
+  <img alt="Python" src="https://img.shields.io/badge/AI%20service-Python%20%C2%B7%20FastAPI-3776AB" />
+  <img alt="Claude" src="https://img.shields.io/badge/LLM-Claude-D97757" />
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green" />
 </p>
 
@@ -64,6 +66,12 @@ Every feature was a way to study one of these topics. The [engineering highlight
 - **Offline downloads**: save a song once and play it with no connection
 - **Resume where you left off**: the queue and position are restored when you reopen the app
 
+**Melodi AI: a mix for this moment** ([how it works](melodi-ai/README.md))
+- Reads the moment: time of day and sunset, weather, whether you're driving or walking, your city, a mood you tap, or a sentence like *"long drive to Vizag at night"*
+- Builds a 25-song mix from **YouTube Music's human-curated mood playlists** and your taste, with a reason for every song
+- Claude understands the context and makes the judgement calls. Code checks every choice, so it can't invent songs.
+- Context chips you can switch off. Melodi only receives labels like "Hyderabad · light rain · driving", never GPS. A location rounded to ~1 km is used for the weather lookup.
+
 **Discovery**
 - Personalised home feed (Listen again, Quick picks, mixes) from YouTube's own recommendations
 - Search with live suggestions, filters (Songs, Artists, Albums, Playlists) and infinite scroll
@@ -76,7 +84,8 @@ Every feature was a way to study one of these topics. The [engineering highlight
 - Sign-in data is stored only in the iPhone **Keychain**
 
 **Privacy**
-- No backend, no analytics, no tracking SDKs. The app talks to YouTube and nothing else.
+- No analytics and no tracking SDKs. Playback, search, library and downloads talk only to YouTube.
+- Melodi AI is optional. It sends only coarse labels (city, weather, activity, mood) and your favourite artists to your own Melodi server, which stores nothing.
 
 ---
 
@@ -91,6 +100,8 @@ Every feature was a way to study one of these topics. The [engineering highlight
 | Audio | `expo-audio` with iOS Now Playing / remote command integration |
 | Storage | `expo-file-system` (library + downloads), `expo-secure-store` (Keychain) |
 | UI | `expo-image`, `expo-blur`, `expo-linear-gradient`, `expo-haptics`, custom components |
+| AI service | **Python, FastAPI**, Anthropic SDK (Claude, structured outputs), ytmusicapi, Pydantic, pytest |
+| Context | `expo-location` (labels only), Open-Meteo weather (free, no key) |
 | Build and signing | Xcode 26, CocoaPods, Expo prebuild (Continuous Native Generation) |
 
 ---
@@ -111,6 +122,9 @@ flowchart LR
     end
     YT -- "HTTPS" --> IT["YouTube InnerTube API"]
     Audio -- "HLS audio" --> CDN["YouTube media CDN"]
+    UI -- "moment labels + taste" --> MA["Melodi AI<br/>FastAPI + Claude"]
+    MA -- "curated mood playlists" --> YTM["YouTube Music<br/>Moods & genres"]
+    MA -- "structured outputs" --> CL["Claude API"]
 ```
 
 **How a song plays**
@@ -153,6 +167,7 @@ src/
     polyfills.ts          Web APIs needed by youtubei.js on Hermes
     store.ts              Tiny external store with useSyncExternalStore
   ui/                     Theme, shared components, mini player
+melodi-ai/                Python service: the Melodi AI planner (see melodi-ai/README.md)
 modules/
   remote-commands/        Swift: next/previous on lock screen and Dynamic Island
   web-cookies/            Swift + Kotlin: read WebView cookies for Google sign-in
