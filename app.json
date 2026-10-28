@@ -9,7 +9,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.dathu.melo",
-      "appleTeamId": "D55Z5HS72V"
+      "appleTeamId": "D55Z5HS72V",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "Melo connects to your own Melodi AI server on this Wi-Fi network to plan mixes."
+      }
     },
     "android": {
       "adaptiveIcon": {
