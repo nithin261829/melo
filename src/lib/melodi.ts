@@ -1,7 +1,10 @@
-// Client for the Melodi AI server (melodi-ai/). Sends the moment plus a taste summary worked out
-// from the local library, and turns the planned mix back into playable Tracks.
-import type { Moment } from './context';
+// Client for the Melodi AI server (github.com/nithin261829/melodi-ai). Sends the moment plus a taste
+// summary worked out from the local library, and turns the planned mix back into playable Tracks.
+// The app asks for a mix by itself when it opens, and reuses the last one while the moment is unchanged.
+import { File, Paths } from 'expo-file-system';
+import { senseMoment, type Moment } from './context';
 import { library } from './library';
+import { createStore } from './store';
 import type { Track } from './yt';
 
 // Set in .env (EXPO_PUBLIC_* values are baked into the app at build time). The token only stops
@@ -17,6 +20,79 @@ export type Mix = {
   tracks: Track[];
   reasons: Record<string, string>; // track id -> why it was picked
 };
+
+export type MomentChip = 'weather' | 'activity' | 'city';
+
+type MelodiState = {
+  status: 'idle' | 'working' | 'ready' | 'error';
+  moment?: Moment;
+  mix?: Mix;
+  error?: string;
+  mood?: string;
+  description: string;
+  off: MomentChip[]; // context the listener chose not to share
+};
+
+export const melodi = createStore<MelodiState>({ status: 'idle', description: '', off: [] });
+
+// Same moment within this window -> reuse the last mix instead of paying for a new one.
+const FRESH_MS = 30 * 60_000;
+const lastFile = new File(Paths.document, 'melodi.json');
+let last: { key: string; plannedAt: number; mix: Mix; moment: Moment } | null = null;
+
+/** Called on launch and whenever the app comes back to the foreground. */
+export function autoMix() {
+  if (!melodiConfigured) return;
+  if (!last) {
+    try {
+      if (lastFile.exists) {
+        last = JSON.parse(lastFile.textSync());
+        if (last && !melodi.get().mix) melodi.set({ status: 'ready', mix: last.mix, moment: last.moment });
+      }
+    } catch {
+      last = null;
+    }
+  }
+  refreshMix({ force: false });
+}
+
+/** Reads the moment and plans a mix; `force` skips the reuse check (new mood, description, pull to refresh). */
+export async function refreshMix({ force }: { force: boolean }) {
+  if (!melodiConfigured || melodi.get().status === 'working') return;
+  melodi.set({ status: 'working', error: undefined });
+  try {
+    const { mood, description, off } = melodi.get();
+    const sensed = await senseMoment();
+    const shared: Moment = {
+      ...sensed,
+      weather: off.includes('weather') ? undefined : sensed.weather,
+      activity: off.includes('activity') ? undefined : sensed.activity,
+      city: off.includes('city') ? undefined : sensed.city,
+    };
+    const key = momentKey(shared, mood, description);
+    if (!force && last && last.key === key && Date.now() - last.plannedAt < FRESH_MS) {
+      melodi.set({ status: 'ready', moment: sensed, mix: last.mix });
+      return;
+    }
+    const mix = await planMix(shared, { mood, description });
+    if (!mix.tracks.length) throw new Error('Melodi could not find songs for this moment. Try another mood.');
+    last = { key, plannedAt: Date.now(), mix, moment: sensed };
+    try {
+      if (!lastFile.exists) lastFile.create();
+      lastFile.write(JSON.stringify(last));
+    } catch {
+      // Not being able to cache only costs a re-plan next launch.
+    }
+    melodi.set({ status: 'ready', moment: sensed, mix });
+  } catch (e: any) {
+    melodi.set({ status: 'error', error: e?.message ?? 'Melodi could not make a mix right now.' });
+  }
+}
+
+// Temperature is left out so a one-degree change doesn't count as a new moment.
+function momentKey(m: Moment, mood?: string, description?: string) {
+  return [m.daypart, m.weather?.split(',')[0], m.activity, m.city, mood, description?.trim()].join('|');
+}
 
 type PlannedTrack = {
   video_id: string;

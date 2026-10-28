@@ -83,8 +83,7 @@ A personal, ad-free YouTube Music app for iPhone, inspired by ViMusic and Demus.
 - Resuming from AirPods after the app was swiped away.
 
 ## Melodi AI (added 2026-10-28)
-- An AI DJ: Home card `src/ui/MelodiCard.tsx` → `src/lib/context.ts` (time, weather, activity, city labels) → `src/lib/melodi.ts` → the Python server in `melodi-ai/` (FastAPI + Claude + ytmusicapi). The design is in `melodi-ai/README.md`.
-- Pipeline: Claude reads the context → code narrows ~3,400 curated YouTube Music mood playlists → Claude picks 3–6 → code collects and scores real tracks → Claude orders the mix. Claude only returns numbers that code validates.
-- Setup: `melodi-ai/.env` needs `ANTHROPIC_API_KEY`. The app reads `EXPO_PUBLIC_MELODI_URL` (and optionally `EXPO_PUBLIC_MELODI_TOKEN`) from the root `.env` at build time. `expo-location` is a native module, so the app needs a rebuild.
-- The user wanted LangChain at first. We chose plain Anthropic SDK structured outputs as simpler and more reliable. A separately-defined-tools agent is on the roadmap.
-- Ideas not built yet: evals in CI, Supabase pgvector taste embeddings, "🎬 Shot here" (Wikidata filming locations → soundtracks), audio mood features (Essentia, CLAP), saved places.
+- The server lives in its own repo: `~/Downloads/melodi-ai` (github.com/nithin261829/melodi-ai). FastAPI + Claude Haiku 5.5 + ytmusicapi. Its design is in that repo's README.
+- In Melo: `src/lib/context.ts` (time, weather, activity, city labels) and `src/lib/melodi.ts` (a store, `autoMix()` on launch and on foreground, reuse of the last mix for 30 min while the moment is unchanged, cached in `melodi.json`). UI: the `src/app/(tabs)/melodi.tsx` tab (full list with reasons) and `src/ui/MelodiShelf.tsx` (first row on Home). Nothing auto-plays.
+- Config: the root `.env` has `EXPO_PUBLIC_MELODI_URL=http://Nithinss-MacBook-Pro.local:8787` and `EXPO_PUBLIC_MELODI_TOKEN`, matching `MELODI_APP_TOKEN` in `melodi-ai/.env`. Run the server from `~/Downloads/melodi-ai` with `uv run uvicorn app.main:app --host 0.0.0.0 --port 8787`. Phone and Mac must be on the same Wi-Fi, and the macOS firewall must allow python3.12.
+- The user wanted LangChain at first; we chose plain Anthropic SDK structured outputs. Ideas not built yet: evals, pgvector taste, "🎬 Shot here", audio mood features, a tool-use agent.

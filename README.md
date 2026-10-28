@@ -66,8 +66,10 @@ Every feature was a way to study one of these topics. The [engineering highlight
 - **Offline downloads**: save a song once and play it with no connection
 - **Resume where you left off**: the queue and position are restored when you reopen the app
 
-**Melodi AI: a mix for this moment** ([how it works](melodi-ai/README.md))
-- Reads the moment: time of day and sunset, weather, whether you're driving or walking, your city, a mood you tap, or a sentence like *"long drive to Vizag at night"*
+**Melodi AI: a mix for this moment** (the AI service is its own project: [melodi-ai](https://github.com/nithin261829/melodi-ai))
+- **Ready when you open the app:** Melo reads the moment (time of day and sunset, weather, driving or walking, your city) and Melodi plans a mix by itself. It shows as the first row on Home.
+- **Melodi tab:** the whole mix with a reason under every song, plus mood chips, a box to describe what you want (*"long drive to Vizag at night"*), and pull to re-plan
+- Reuses the last mix while the moment hasn't changed (30 minutes), so it doesn't spend API credit on every open
 - Builds a 25-song mix from **YouTube Music's human-curated mood playlists** and your taste, with a reason for every song
 - Claude understands the context and makes the judgement calls. Code checks every choice, so it can't invent songs.
 - Context chips you can switch off. Melodi only receives labels like "Hyderabad · light rain · driving", never GPS. A location rounded to ~1 km is used for the weather lookup.
@@ -100,7 +102,7 @@ Every feature was a way to study one of these topics. The [engineering highlight
 | Audio | `expo-audio` with iOS Now Playing / remote command integration |
 | Storage | `expo-file-system` (library + downloads), `expo-secure-store` (Keychain) |
 | UI | `expo-image`, `expo-blur`, `expo-linear-gradient`, `expo-haptics`, custom components |
-| AI service | **Python, FastAPI**, Anthropic SDK (Claude, structured outputs), ytmusicapi, Pydantic, pytest |
+| AI service | [melodi-ai](https://github.com/nithin261829/melodi-ai) (separate repo): **Python, FastAPI**, Anthropic SDK (Claude Haiku 5.5, structured outputs), ytmusicapi, pytest |
 | Context | `expo-location` (labels only), Open-Meteo weather (free, no key) |
 | Build and signing | Xcode 26, CocoaPods, Expo prebuild (Continuous Native Generation) |
 
@@ -167,7 +169,6 @@ src/
     polyfills.ts          Web APIs needed by youtubei.js on Hermes
     store.ts              Tiny external store with useSyncExternalStore
   ui/                     Theme, shared components, mini player
-melodi-ai/                Python service: the Melodi AI planner (see melodi-ai/README.md)
 modules/
   remote-commands/        Swift: next/previous on lock screen and Dynamic Island
   web-cookies/            Swift + Kotlin: read WebView cookies for Google sign-in

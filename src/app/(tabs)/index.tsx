@@ -9,7 +9,7 @@ import { playTrack, playTracks } from '../../lib/player';
 import { useStore } from '../../lib/store';
 import { getHome, type Shelf } from '../../lib/yt';
 import { Artwork, CollectionCard, ErrorView, HScroll, Loading, SectionTitle, TrackCard, TrackRow } from '../../ui/components';
-import { MelodiCard } from '../../ui/MelodiCard';
+import { MelodiShelf } from '../../ui/MelodiShelf';
 import { colors } from '../../ui/theme';
 
 function AccountButton() {
@@ -98,7 +98,7 @@ export default function Home() {
         <AccountButton />
       </View>
 
-      <MelodiCard />
+      <MelodiShelf />
 
       {recent.length > 0 && (
         <>
