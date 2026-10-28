@@ -60,9 +60,9 @@ A personal, ad-free YouTube Music app for iPhone, inspired by ViMusic and Demus.
 - A stale Metro process on port 8081 serves old code. Kill it with `lsof -i :8081` before restarting.
 
 ## App icon
-- The icon is a monkey with headphones and sunglasses, taken from a free VectorStock preview with the watermark bar cropped off and centred on a white 1024×1024 square.
-- It's in `assets/icon.png` and the iOS icon set.
-- It's fine for personal use only. Before sharing or publishing Melo, buy the licence or replace the image.
+- The icon is an original drawing: a cartoon monkey with headphones and sunglasses on Melo's purple-to-pink gradient. It's drawn in code by `scripts/make_icon.py` (Pillow), so there are no licence or attribution requirements.
+- Regenerate it with `python3 scripts/make_icon.py assets/icon.png`. Then copy the result to `ios/Melo/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png`, or run prebuild.
+- It replaced an earlier VectorStock preview image, which was never licensed.
 
 ## Status as of 2026-10-28
 - Installed and working on the iPhone with the monkey icon:
