@@ -77,17 +77,31 @@ export default function MelodiScreen() {
         ))}
       </ScrollView>
 
-      <TextInput
-        value={draft}
-        onChangeText={setDraft}
-        placeholder="Describe it… “long drive to Vizag at night”"
-        placeholderTextColor={colors.faint}
-        style={s.input}
-        maxLength={300}
-        returnKeyType="go"
-        editable={!working}
-        onSubmitEditing={() => replan({ description: draft })}
-      />
+      {/* A roomy, Claude-style prompt box: grows with the text, send button in the corner. */}
+      <View style={[s.prompt, working && { opacity: 0.6 }]}>
+        <TextInput
+          value={draft}
+          onChangeText={setDraft}
+          placeholder={'Describe the music you want…\ne.g. “long drive to Vizag at night, soft Telugu melodies”'}
+          placeholderTextColor={colors.faint}
+          style={s.promptInput}
+          multiline
+          maxLength={300}
+          editable={!working}
+          textAlignVertical="top"
+        />
+        <View style={s.promptFooter}>
+          <Text style={s.promptCount}>{draft.length}/300</Text>
+          <Pressable
+            disabled={working || !draft.trim()}
+            onPress={() => replan({ description: draft })}
+            style={[s.send, (working || !draft.trim()) && { opacity: 0.35 }]}
+            hitSlop={8}
+          >
+            <Ionicons name="arrow-up" size={20} color="#fff" />
+          </Pressable>
+        </View>
+      </View>
 
       {working && (
         <View style={s.working}>
@@ -160,7 +174,11 @@ const s = StyleSheet.create({
   chip: { color: colors.text, fontSize: 13.5, fontWeight: '600', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 16, overflow: 'hidden', backgroundColor: colors.surface2 },
   chipOn: { backgroundColor: colors.accent },
   chipOff: { opacity: 0.4, textDecorationLine: 'line-through' },
-  input: { marginTop: 12, marginHorizontal: 16, color: colors.text, fontSize: 14.5, backgroundColor: colors.surface2, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 10 },
+  prompt: { marginTop: 14, marginHorizontal: 16, backgroundColor: colors.surface, borderRadius: 22, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 14, paddingTop: 12, paddingBottom: 10 },
+  promptInput: { color: colors.text, fontSize: 16.5, lineHeight: 23, minHeight: 96, maxHeight: 180, padding: 0 },
+  promptFooter: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 },
+  promptCount: { color: colors.faint, fontSize: 12 },
+  send: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   working: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 16, marginTop: 16 },
   workingText: { color: colors.sub, fontSize: 14 },
   error: { color: colors.accent, fontSize: 13.5, marginTop: 14, paddingHorizontal: 16 },
