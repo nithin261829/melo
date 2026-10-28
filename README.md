@@ -19,7 +19,20 @@
 </p>
 
 > [!IMPORTANT]
-> **For learning and experimental purposes only.** Melo is a personal project I built to learn React Native, native iOS integration and how streaming apps work. It is not a product, is not on the App Store and is not meant for distribution. It isn't affiliated with or endorsed by YouTube or Google. See the [disclaimer](#disclaimer).
+> **Built for experimentation, learning and study, not as a product.** I made Melo to study how React Native really works on iOS and to understand it through a real, non-trivial app, not tutorials. It is not on the App Store, isn't meant for distribution, and isn't affiliated with or endorsed by YouTube or Google. See [Why I built this](#why-i-built-this) and the [disclaimer](#disclaimer).
+
+## Why I built this
+
+Melo is an **experiment and a learning project**. I wanted to go beyond to-do apps and understand the dynamics of React Native by building something that pushes on every layer at once:
+
+- **How React Native works under the hood:** the JavaScript thread, the Hermes engine, and how JS talks to native iOS code through Expo Modules.
+- **Writing native code when JavaScript isn't enough:** two small Swift modules for lock-screen controls and WebView cookies, and learning where the JS/native boundary should sit.
+- **State and performance on a phone:** a lightweight store with `useSyncExternalStore`, dropping stale async work, prefetching, and keeping lists smooth with infinite scroll.
+- **How iOS treats audio apps:** audio sessions, background modes, Now Playing, remote commands and the Dynamic Island.
+- **How streaming actually works:** HLS playlists, AAC segments, and what a real app has to handle when an upstream service changes.
+- **The full native toolchain:** Expo prebuild, CocoaPods, Xcode signing, and installing on a real device with a free Apple ID.
+
+Every feature was a way to study one of these topics. The [engineering highlights](#engineering-highlights) section lists what I ran into and learned.
 
 ---
 
@@ -253,9 +266,9 @@ npx expo lint           # lint
 
 ## Disclaimer
 
-**This project is for learning and experimental purposes only.**
+**This project exists only for experimentation, learning and studying React Native.**
 
-- I built Melo to study React Native, native iOS modules (Swift), audio streaming and app architecture. It is not a commercial product and is not distributed through any app store.
+- I built Melo to study the dynamics of React Native and understand native iOS integration (Swift), audio streaming and app architecture through hands-on experimentation. It is not a commercial product and is not distributed through any app store.
 - Melo is not affiliated with, endorsed by or connected to YouTube or Google. "YouTube" and "YouTube Music" are trademarks of Google LLC.
 - Accessing or downloading YouTube content outside YouTube's official apps goes against YouTube's Terms of Service. Don't use this project to redistribute content or for any commercial purpose.
 - All music, artwork and metadata belong to their respective owners. Album art in the screenshots is shown only to demonstrate the interface.
