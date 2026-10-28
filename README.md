@@ -15,6 +15,7 @@
   <img alt="React Native" src="https://img.shields.io/badge/React%20Native-0.88-61DAFB" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-3178C6" />
   <img alt="Swift" src="https://img.shields.io/badge/native-Swift-F05138" />
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green" />
 </p>
 
 > [!IMPORTANT]
@@ -259,3 +260,9 @@ npx expo lint           # lint
 - Accessing or downloading YouTube content outside YouTube's official apps goes against YouTube's Terms of Service. Don't use this project to redistribute content or for any commercial purpose.
 - All music, artwork and metadata belong to their respective owners. Album art in the screenshots is shown only to demonstrate the interface.
 - The code is provided as-is, with no warranty. You are responsible for how you use it.
+
+---
+
+## License
+
+The source code is released under the [MIT License](LICENSE). That covers the code and the app icon in this repository only. It grants no rights to YouTube content, music or artwork, which belong to their respective owners (see the [disclaimer](#disclaimer)).
