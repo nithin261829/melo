@@ -110,7 +110,7 @@ Every feature was a way to study one of these topics. The [engineering highlight
 
 ## Architecture
 
-<p align="center"><img src="docs/architecture.svg" alt="Architecture: the Melo iPhone app, the Melodi AI server and the cloud services they use" width="100%" /></p>
+<p align="center"><img src="architecture.svg" alt="Architecture: the Melo iPhone app, the Melodi AI server and the cloud services they use" width="100%" /></p>
 
 **How a song plays**
 1. `yt.ts` asks InnerTube for the track's streaming data, using the client profile YouTube serves to visionOS.
