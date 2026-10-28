@@ -49,7 +49,7 @@ export default function MelodiScreen() {
     >
       <View style={s.header}>
         <Ionicons name="sparkles" size={24} color={colors.accent} />
-        <Text style={s.h1}>Melodi</Text>
+        <Text style={s.h1}>Melodi AI</Text>
       </View>
       <Text style={s.lead}>Songs for this moment, picked from your time, weather, place, mood and taste.</Text>
 
@@ -82,7 +82,7 @@ export default function MelodiScreen() {
         <TextInput
           value={draft}
           onChangeText={setDraft}
-          placeholder={'Describe the music you want…\ne.g. “long drive to Vizag at night, soft Telugu melodies”'}
+          placeholder={'Tell Melodi AI the music you want…\ne.g. “long drive to Vizag at night, soft Telugu melodies”'}
           placeholderTextColor={colors.faint}
           style={s.promptInput}
           multiline
@@ -106,7 +106,7 @@ export default function MelodiScreen() {
       {working && (
         <View style={s.working}>
           <ActivityIndicator color={colors.accent} />
-          <Text style={s.workingText}>Melodi is reading the moment…</Text>
+          <Text style={s.workingText}>Melodi AI is reading the moment…</Text>
         </View>
       )}
       {status === 'error' && error && <Text style={s.error}>{error}</Text>}

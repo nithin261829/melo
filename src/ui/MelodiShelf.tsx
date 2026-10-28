@@ -25,7 +25,8 @@ export function MelodiShelf() {
       </SectionTitle>
       {mix ? (
         <>
-          <Text style={{ color: colors.sub, fontSize: 13.5, paddingHorizontal: 16, marginTop: -6, marginBottom: 12 }} numberOfLines={2}>
+          <Text style={{ color: colors.accent2, fontSize: 12.5, fontWeight: '700', paddingHorizontal: 16, marginTop: -8, marginBottom: 4 }}>✨ by Melodi AI</Text>
+          <Text style={{ color: colors.sub, fontSize: 13.5, paddingHorizontal: 16, marginBottom: 12 }} numberOfLines={2}>
             {mix.description}
           </Text>
           <HScroll>
@@ -37,7 +38,7 @@ export function MelodiShelf() {
       ) : (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 16 }}>
           <ActivityIndicator color={colors.accent} />
-          <Text style={{ color: colors.sub, fontSize: 14 }}>Melodi is reading the moment…</Text>
+          <Text style={{ color: colors.sub, fontSize: 14 }}>Melodi AI is reading the moment…</Text>
         </View>
       )}
     </View>
