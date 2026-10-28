@@ -41,3 +41,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# full-size original screenshots (README uses the trimmed copies in docs/screenshots)
+/images/
