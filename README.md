@@ -31,7 +31,7 @@ I wanted to understand React Native properly, not through to-do apps but by buil
 - Lock screen and Dynamic Island controls with next/previous and a seek bar
 - Search with filters and infinite scroll; albums, artists and playlists
 - Sign in with Google or a TV code for your own home feed, history and likes
-- **Melodi AI tab:** a mix for your time, weather, activity and mood, with a reason for each song
+- **Melodi AI tab:** a mix for your time, weather, activity and mood, with a reason for each song. Tap a mood (Calm, Happy, Romantic, Sad, Hype, Focus) or describe what you want; it's combined with the moment, not used on its own ([how it reads the mood](https://github.com/nithin261829/melodi-ai#how-it-reads-the-mood-and-vibe))
 
 ## How it works
 
