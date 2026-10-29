@@ -43,6 +43,20 @@ Melo (iPhone)
   └─ Melodi AI client → sends moment labels (no GPS), gets a mix back
 ```
 
+## How it uses YouTube
+
+Melo doesn't use the official YouTube Data API. That API has no audio streams, no YouTube Music data (home feed, lyrics, radio) and a daily quota. Instead, [`youtubei.js`](https://github.com/LuanRT/YouTube.js) talks to **InnerTube**, the internal API that youtube.com and the YouTube Music app use themselves. There's no API key and no cost, and every call goes straight from the phone to YouTube; there's no server in between.
+
+| What Melo asks YouTube for | Where in the code |
+|---|---|
+| Home feed, search, suggestions | `getHome`, `search`, `getSuggestions` |
+| Albums, artists, playlists, lyrics | `getAlbum`, `getArtist`, `getPlaylist`, `getLyrics` |
+| "Up next" radio for endless play | `getUpNext` |
+| The audio stream (HLS) and downloads | `getAudioUrl`, `downloadAudio` |
+| Your history, playlists and likes (when signed in) | `getHistory`, `getMyPlaylists`, `rateSong` |
+
+All of it lives in one file, `src/lib/yt.ts`, so if YouTube changes something there's one place to fix. The trade-off is that InnerTube is unofficial and undocumented. YouTube can change it at any time; it already did once, when direct audio links started cutting off after 1 MB. Using it outside YouTube's own apps also goes against YouTube's Terms of Service, which is why this stays a personal learning project.
+
 ## How it's built
 
 - **Audio that doesn't stop after 1 MB.** YouTube now cuts off direct audio links for most clients partway through a song. I traced it, then switched to the client profile YouTube serves to visionOS, which returns an audio-only HLS stream that iOS plays natively. No ads, because YouTube's ads live in its own player.
