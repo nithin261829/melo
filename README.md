@@ -10,12 +10,16 @@ React Native · Expo · TypeScript · Swift · MIT
 
 <table>
   <tr>
+    <td align="center"><img src="docs/screenshots/melodi-ai.png" width="200" alt="Melodi AI" /><br/><sub>Melodi AI</sub></td>
     <td align="center"><img src="docs/screenshots/home.png" width="200" alt="Home" /><br/><sub>Home</sub></td>
-    <td align="center"><img src="docs/screenshots/search.png" width="200" alt="Search" /><br/><sub>Search</sub></td>
     <td align="center"><img src="docs/screenshots/player.png" width="200" alt="Now playing" /><br/><sub>Now playing</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/screenshots/search.png" width="200" alt="Search" /><br/><sub>Search</sub></td>
+    <td align="center"><img src="docs/screenshots/library.png" width="200" alt="Library" /><br/><sub>Library</sub></td>
     <td align="center"><img src="docs/screenshots/lock-screen.png" width="200" alt="Lock screen" /><br/><sub>Lock screen</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="docs/screenshots/sign-in.png" width="200" alt="Sign in" /><br/><sub>Sign in</sub></td>
     <td align="center"><img src="docs/screenshots/dynamic-island.png" width="240" alt="Dynamic Island" /><br/><sub>Dynamic Island</sub></td>
   </tr>
